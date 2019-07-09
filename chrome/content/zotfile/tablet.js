@@ -8,7 +8,7 @@ Zotero.ZotFile.Tablet = new function() {
 
     /**
      * Add tablet tag to attachment and parent item. A separate save() for attachment and parent item
-     *     is required to update the database.
+ getAttachmentFromTablet    *getAttachmentFromTablet     is required to update the database.
      * @param {Zotero.Item} att Zotero attachment item
      * @param {string}      tag Name of tag
      * @return {void}
@@ -430,7 +430,9 @@ Zotero.ZotFile.Tablet = new function() {
             if (tablet_status) {
                 var path_tablet = yield this.Tablet.getTabletFilePath(att);
                 if(path_tablet) {
-                    path = yield this.moveFile(path_tablet, folder, att.attachmentFilename);
+		   this.removeFile(path_tablet);
+		   path = yield this.copyFile(path, folder, att.attachmentFilename);
+                   //path = yield this.moveFile(path_tablet, folder, att.attachmentFilename);
                 }
                 else {
                     this.infoWindow('ZotFile Warning', 'File on tablet not found. Zotfile is creating a new copy on tablet.');
